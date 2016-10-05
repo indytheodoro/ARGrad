@@ -17,6 +17,7 @@ obra<-function(amostras=1000,p=0.40){
   cmo<-vector(length = amostras)
   cser<-vector(length = amostras)
   ctotal<-vector(length = amostras)
+ 
   
   #Calcular os custos com base em dois possíveis comprimentos: 260.000m ou 290.000m
   
