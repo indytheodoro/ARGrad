@@ -3,7 +3,7 @@
 #Biblioteca
 library(triangle)
 
-### Exercício 1 ###
+### ExercÃ­cio 1 ###
 
 taxi<-function(amostras){
   
@@ -23,12 +23,12 @@ taxi<-function(amostras){
   eixoY1<-dnorm(eixoX1, mediaI, sqrt(varI))
   plot(eixoX1, eixoY1, type="l", main="Gasto Individual por Taxi")
   
-  ## Simulacao do gasto diário pela Frota com TCL ##
+  ## Simulacao do gasto diÃ¡rio pela Frota com TCL ##
   mediaD<-frota*mean(gastoTaxi)
   varD<-frota*var(gastoTaxi)
   eixoX2<-seq(mediaD-3*sqrt(varD), mediaD+3*sqrt(varD), 0.1)
   eixoY2<-dnorm(eixoX2, mediaD, sqrt(varD))
-  plot(eixoX2, eixoY2, type="l", main="Gasto Diário pela Frota")  
+  plot(eixoX2, eixoY2, type="l", main="Gasto DiÃ¡rio pela Frota")  
   
   
   ## Simulacao produto do gasto da das 2 VA's por TCL
@@ -40,11 +40,11 @@ taxi<-function(amostras){
   
   eixoX3<-seq(mediaGasto-3*sqrt(varGasto), mediaGasto+3*sqrt(varGasto), 0.1)
   eixoY3<-dnorm(eixoX3, mediaGasto, sqrt(varGasto))
-  plot(eixoX3, eixoY3, type="l", main="Gasto Diário pela Frota 2 VA's")  
+  plot(eixoX3, eixoY3, type="l", main="Gasto DiÃ¡rio pela Frota 2 VA's")  
   
 }
 
-### Exercício 2 ###
+### ExercÃ­cio 2 ###
 
 navio<-function(amostras){
   
@@ -55,7 +55,7 @@ navio<-function(amostras){
   #Variavel
   tempoReb<-rtriangle(amostras, 3.45, 5.3, 4.15) 
   
-  #Solicitado na questão, TCL
+  #Solicitado na questÃ£o, TCL
   riscoMO<-tempoReb*custoReb*placas
   mRiscoMO<-mean(riscoMO)
   vRiscoMO<-var(riscoMO)
@@ -69,7 +69,7 @@ navio<-function(amostras){
   
 }
 
-### Exercício 3 ###
+### ExercÃ­cio 3 ###
 
 almoco<-function(amostras){
   
@@ -91,3 +91,4 @@ almoco<-function(amostras){
   plot(eixoX, eixoY, type="l", main="TOTAL GASTO DA NEW ENGLAND")
 }
 
+ 
