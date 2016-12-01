@@ -42,12 +42,15 @@ library("triangle")
 #   evento 5: segundos acertos
 
 fases<-make_graph(c(
-  1,2,1,4,2,3,2,8,3,8,4,6,4,5,5,6,6,7,7,8,
-  8,11,11,14,11,15,14,20,15,20,20,23,20,24,
-  9,12,12,16,12,17,16,21,17,21,21,25,21,26,
-  10,13,13,18,13,19,18,22,19,22,22,27,22,28,
-  10,29,23,30,24,30,25,30,26,30,27,30,28,30,
-  29,30,30,31,30,33,31,32,31,33,32,33
+  1,2, 1,4, 2,3, 2,8, 3,8, 
+  4,6, 4,5, 5,6, 6,7, 7,8,
+  8,11, 11,14, 11,15, 14,20, 15,20, 
+  20,23, 20,24, 9,12, 12,16, 12,17, 
+  16,21, 17,21, 21,25, 21,26, 10,13, 
+  13,18, 13,19, 18,22, 19,22, 22,27, 
+  22,28, 10,29, 23,30, 24,30, 25,30, 
+  26,30, 27,30, 28,30, 29,30, 30,31, 
+  30,33, 31,32, 31,33, 32,33
 ))
 
 plot(fases)
@@ -59,7 +62,7 @@ sorteia_evento<-function(NS){
   e[,3]<-rbinom(NS, 1, 0.9)
   e[,4]<-rbinom(NS, 1, 0.4)
   e[,5]<-rbinom(NS, 1, 0.05)
-
+  
   e
 }
 
@@ -145,99 +148,116 @@ sorteia_custos<-function(NS, matrixDuracao){
 
 custo_cenario<-function(cenario_custo, cenario_evento){
   custo<-vector()
+  
   for(i in 1:nrow(cenario_custo)){
     #soma todos os custos
     custo[i]<-sum(cenario_custo[i,])
-
+    
     #retira os custos que não aconteceram de acordo com a tabela de eventos
     if(cenario_evento[i,1] == 0){
       custo[i] = custo[i] - cenario_custo[i,3]
     }
-
+    
     if(cenario_evento[i,2] == 0){
       custo[i] = custo[i] - cenario_custo[i,5]
     }
-
+    
     if(cenario_evento[i,3] == 1){
       custo[i] = custo[i] - cenario_custo[i,15] - cenario_custo[i,17] - cenario_custo[i,19]
-    }
-
-   else{
+    } else {
       custo[i] = custo[i] - cenario_custo[i,14] - cenario_custo[i,16] - cenario_custo[i,18]
     }
-
+    
     if(cenario_evento[i,4] == 0){
       custo[i] = custo[i] - cenario_custo[i,31]
     }
-
+    
     if(cenario_evento[i,5] == 0){
       custo[i] = custo[i] - cenario_custo[i,32]
     }
-
+    
   }
-
+  
   custo  
 }
 
-duracao_cenario<-function(cenario_duracao, cenario_evento){
-  duracao<-vector()
-  for(i in 1:nrow(cenario_duracao)){
-    #soma todas as duracoes
-    duracao[i]<-sum(cenario_duracao[i,])
-
-    #retira as durações que não aconteceram de acordo com a tabela de eventos
-    if(cenario_evento[i,1] == 0){
-      duracao[i] = duracao[i] - cenario_duracao[i,3]
-    }
-
-    if(cenario_evento[i,2] == 0){
-      duracao[i] = duracao[i] - cenario_duracao[i,5]
-    }
-
-    if(cenario_evento[i,3] == 1){
-      duracao[i] = duracao[i] - cenario_duracao[i,15] - cenario_duracao[i,17] - cenario_duracao[i,19]
-    }
-
-   else{
-      duracao[i] = duracao[i] - cenario_duracao[i,14] - cenario_duracao[i,16] - cenario_duracao[i,18]
-    }
-
-    if(cenario_evento[i,4] == 0){
-      duracao[i] = duracao[i] - cenario_duracao[i,31]
-    }
-
-    if(cenario_evento[i,5] == 0){
-      duracao[i] = duracao[i] - cenario_duracao[i,32]
-    }
-
+calcula_grafo_cenario<-function(i, cenario_evento){
+  
+  remover<-c()
+  
+  if(cenario_evento[i,1] == 0){
+    remover <- c(remover, 3, 5)
   }
+  
+  if(cenario_evento[i,2] == 0){
+    remover <- c(remover, 7, 8)
+  }
+  
+  if(cenario_evento[i,3] == 1){
+    remover <- c(remover, 13, 15, 20, 22, 27, 29)
+  } else {
+    remover <- c(remover, 12, 14, 19, 21, 26, 28)
+  }
+  
+  if(cenario_evento[i,4] == 0){
+    remover <- c(remover, 40, 43)
+  }
+  
+  if(cenario_evento[i,5] == 0){
+    remover <- c(remover, 42, 44)
+  }
+  
+  grafoCenario<-delete_edges(fases, remover)
+  #plot(grafoCenario)
+  
+  grafoCenario
+}
 
-  duracao
+calcula_duracao_cenarios<-function(NS, dur, evento){
+  vetorDuracaoCenarios<-vector(length = NS)
+  
+  for(i in 1:NS){
+    durMaiorCaminho<-0
+    
+    grafoCenario<-calcula_grafo_cenario(i, evento)
+    caminhos<-all_simple_paths(grafoCenario,from=1,to=33)
+    
+    for(j in 1:length(caminhos)){
+      durCaminhoAtual<-sum(dur[i,][caminhos[[j]]])
+      
+      if(durCaminhoAtual > durMaiorCaminho){
+        durMaiorCaminho<-durCaminhoAtual
+      }
+    }
+    
+    vetorDuracaoCenarios[i]<-durMaiorCaminho
+  }
+  
+  vetorDuracaoCenarios
 }
 
 normalizadora<-function(vetor, cabecalho){
-
   media <- mean(vetor)
   dv <- sqrt(var(vetor))
-
+  
   eixoX = seq(media - 3*dv,media + 3*dv,0.1)
   eixoY = dnorm(eixoX, media, dv)
   plot(eixoX, eixoY, type="l", main=cabecalho)
-
 }
 
-main<-function(){
-
-  NS<-3000
-
+main<-function(NS){
   evento<-sorteia_evento(NS)
   dur<-sorteia_duracao(NS)
   custo<-sorteia_custos(NS, dur)
-
+  
   sim_custo<-custo_cenario(custo, evento)
-  sim_duracao<-duracao_cenario(dur, evento)
-
   normalizadora(sim_custo, "custo")
+  custoCDF<-ecdf(sim_custo)
+  plot(custoCDF)
+  
+  sim_duracao<-calcula_duracao_cenarios(NS, dur, evento)
   normalizadora(sim_duracao, "duracao")
-
+  durCDF<-ecdf(sim_duracao)
+  plot(durCDF)
 }
+
