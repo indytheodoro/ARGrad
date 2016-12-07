@@ -1,21 +1,21 @@
 # ============================ LISTA 6 ===============================
 
 # 1: Projeto de sistema
-# 2: Projeto de módulo
-# 3: Projeto de módulo
-# 4: Projeto de módulo
-# 5: Projeto de módulo
-# 6: Codificação de módulo
-# 7: Codificação de módulo
-# 8: Codificação de módulo
-# 9: Codificação de módulo
-# 10: Teste de módulo
-# 11: Teste de módulo
-# 12: Teste de módulo
-# 13: Teste de módulo
-# 14: Integração
+# 2: Projeto de mÃ³dulo
+# 3: Projeto de mÃ³dulo
+# 4: Projeto de mÃ³dulo
+# 5: Projeto de mÃ³dulo
+# 6: CodificaÃ§Ã£o de mÃ³dulo
+# 7: CodificaÃ§Ã£o de mÃ³dulo
+# 8: CodificaÃ§Ã£o de mÃ³dulo
+# 9: CodificaÃ§Ã£o de mÃ³dulo
+# 10: Teste de mÃ³dulo
+# 11: Teste de mÃ³dulo
+# 12: Teste de mÃ³dulo
+# 13: Teste de mÃ³dulo
+# 14: IntegraÃ§Ã£o
 # 15: Teste do sistema
-# 16: Teste de aceitação
+# 16: Teste de aceitaÃ§Ã£o
 
 # 17: Retrabalho1
 # 18: testeRetrabalho1
@@ -34,14 +34,13 @@ projeto<-function(amostras){
   neventos<-eventos(amostras)
   nprazo<-atividades(amostras)
   duracao<-vector(length=amostras)
-  
+ 
   caminho<-c(1,2,1,3,1,4,1,5,
              2,6,3,7,4,8,5,9,
              6,10,7,11,8,12,9,13,
              10,14,11,14,12,14,13,14,
              14,15,15,16)
-  
-  
+    
   for(i in 1:amostras){
     if (neventos[i,1]==1){
       caminho<-c(caminho,c(16,17,17,18))
@@ -79,10 +78,10 @@ projeto<-function(amostras){
 
 atividades<-function(amostras){
 
-  média<-c(0,0,0)
+  mÃ©dia<-c(0,0,0)
   matrixCorr<-matrix(c(1,0.7,0,0.7,1,0.5,0,0.5,1), ncol = 3)
   
-  covariancia<-mvrnorm(amostras,mu=média,Sigma=matrixCorr)
+  covariancia<-mvrnorm(amostras,mu=mÃ©dia,Sigma=matrixCorr)
   acumulada<-pnorm(covariancia)
   
   t<-matrix(nrow = amostras, ncol = 3)
