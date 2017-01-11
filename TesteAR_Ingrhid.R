@@ -22,7 +22,7 @@ teste<-function(amostras){
     evento
   }
   
-  duração<-function(amostras){
+  duraÃ§Ã£o<-function(amostras){
     
     duracao<-matrix(nrow = amostras, ncol = 9)
      
@@ -57,9 +57,9 @@ teste<-function(amostras){
     preco    
   }
   
-  #chamada funções
+  #chamada funÃ§Ãµes
   neventos<-eventos(amostras)
-  nprazo<-duração(amostras)
+  nprazo<-duraÃ§Ã£o(amostras)
   nvalor<-custo(amostras)
   
   duracao<-vector(length=amostras)
@@ -67,7 +67,7 @@ teste<-function(amostras){
   
   caminho<-(c(1,2,2,3,3,4,4,5,5,6))
   
-  #Calcula direção do grafo
+  #Calcula direÃ§Ã£o do grafo
   for(i in 1:amostras){
     totalcusto[i]<-sum(nvalor[i,])
     if (neventos[i,7]==1){
@@ -86,10 +86,10 @@ teste<-function(amostras){
     
     tempo<-nprazo
     
-    #variável temporária
+    #variÃ¡vel temporÃ¡ria
     maior<-0
    
-    #Calcular maior duração do projeto
+    #Calcular maior duraÃ§Ã£o do projeto
     for (j in 1:np){
       t<-sum(tempo[i,][p[[j]]])
       if(t>maior){
@@ -103,18 +103,18 @@ teste<-function(amostras){
   totalcusto
   plot(g)
   
-  #####Distribuição Duração
-  m_duração<-mean(duracao)
-  var_duração<-var(duracao)
-  dp_duração<-sd(duracao)
-  #print(m_duração)
+  #####DistribuiÃ§Ã£o DuraÃ§Ã£o
+  m_duraÃ§Ã£o<-mean(duracao)
+  var_duraÃ§Ã£o<-var(duracao)
+  dp_duraÃ§Ã£o<-sd(duracao)
+  #print(m_duraÃ§Ã£o)
   probTempo<-duracao*neventos
-  pTempo<-pnorm(probTempo, m_duração, dp_duração)
+  pTempo<-pnorm(probTempo, m_duraÃ§Ã£o, dp_duraÃ§Ã£o)
   hist(pTempo)
   cumulativa<-(ecdf(pTempo))
   plot(cumulativa)
   
-  #####Distribuição Custo
+  #####DistribuiÃ§Ã£o Custo
   m_custo<-mean(totalcusto)
   var_custo<-var(totalcusto)
   dp_custo<-sd(totalcusto)
@@ -126,8 +126,8 @@ teste<-function(amostras){
   cumulativa<-(ecdf(pCusto))
   plot(cumulativa)
   
-  #####Criando gráfico tornado
-  #geração dos cenários
+  #####Criando grÃ¡fico tornado
+  #geraÃ§Ã£o dos cenÃ¡rios
   impacto_custos<-vector(length = amostras)
   impacto_prazo<-vector(length = amostras)
   impacto_custos<-neventos*nvalor
@@ -172,9 +172,9 @@ teste<-function(amostras){
   
   
   
-  # #####Correlação entre custo x prazo
+  # #####CorrelaÃ§Ã£o entre custo x prazo
   # corr<-function(amostras){
-  #   média<-c(0,0)
+  #   mÃ©dia<-c(0,0)
   #   matrixCorr<-matrix(c(0.7,0.7,0.4,0.4), ncol = 4)
   #   
   #   ev<-matrix(nrow = amostras, ncol = 4)
@@ -185,7 +185,7 @@ teste<-function(amostras){
   #   ev[,4]<-rtriangle(amostras,210,300,250) #F
   #   
   #   
-  #   covariancia<-mvrnorm(amostras,mu=média,Sigma=matrixCorr)
+  #   covariancia<-mvrnorm(amostras,mu=mÃ©dia,Sigma=matrixCorr)
   #   acumulada<-pnorm(covariancia)
   #   plot(acumulada)
     
@@ -193,5 +193,5 @@ teste<-function(amostras){
   
   #corr_custo_prazo<-corr(amostras)
   
-  
+   
 }
